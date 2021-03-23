@@ -1,24 +1,34 @@
 let cat;
-let fish;
 let spiral;
+
+let fishes = [];
+let fishes_count = 5;
 
 function setup() {
     createCanvas(1000, 1000);
-    
-    fish = new Fish();
-    fish.orbit_enabled = true;
-    fish.orbit_center.x = 500;
-    fish.orbit_center.y = 200;
-    fish.orbit_height = 300;
-    fish.orbit_width = 500;
+
+    for (let fish_index = 0; fish_index < fishes_count; fish_index++) {
+        fish = new Fish();
+        fish.orbit_enabled = true;
+        fish.orbit_angle = fish_index / fishes_count * TAU;
+        fish.orbit_center.x = 500;
+        fish.orbit_center.y = 200;
+        fish.orbit_height = 300;
+        fish.orbit_width = 500;
+        fish.rotation_angle = random() * TAU;
+        fishes[fish_index] = fish;
+    }
 }
 
 function draw() {
     background(255);
 
-    fish.orbit_angle = fish.orbit_angle + 0.005;
-    fish.rotation_angle = fish.rotation_angle + 0.02;
-    fish.draw();
+    for (let fish_index = 0; fish_index < fishes_count; fish_index++) {
+        let fish = fishes[fish_index];
+        fish.orbit_angle = fish.orbit_angle + 0.005;
+        fish.rotation_angle = fish.rotation_angle + 0.02;
+        fish.draw();
+    }
 }
 
 class Cat {
