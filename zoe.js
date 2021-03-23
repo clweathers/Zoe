@@ -5,7 +5,7 @@ let fishes = [];
 let fishes_count = 5;
 
 function setup() {
-    createCanvas(1000, 1000);
+    createCanvas(windowWidth, windowHeight);
 
     colorMode(HSB);
 
@@ -14,10 +14,10 @@ function setup() {
         fish.color = color(fish_index / fishes_count * 360, 44, 77);
         fish.orbit_enabled = true;
         fish.orbit_angle = fish_index / fishes_count * TAU;
-        fish.orbit_center.x = 500;
-        fish.orbit_center.y = 200;
-        fish.orbit_height = 300;
-        fish.orbit_width = 500;
+        fish.orbit_center.x = width / 2;
+        fish.orbit_center.y = height / 2;
+        fish.orbit_width = width * 0.5;
+        fish.orbit_height = height * 0.6;
         fish.rotation_angle = random() * TAU;  // This is more uniform if we use 'fish_index / fishes_count * TAU' instead.
         fishes[fish_index] = fish;
     }
