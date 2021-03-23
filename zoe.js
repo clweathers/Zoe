@@ -29,8 +29,8 @@ function draw() {
     for (let fish_index = 0; fish_index < fishes_count; fish_index++) {
         let fish = fishes[fish_index];
         fish.set_color_hue(fish.color_hue() + 0.5);
-        fish.orbit_angle = fish.orbit_angle + 0.005;
-        fish.rotation_angle = fish.rotation_angle + 0.02;
+        fish.orbit_angle = fish.orbit_angle + 0.001;
+        fish.rotation_angle = fish.rotation_angle + 0.008;
         fish.draw();
     }
 }
