@@ -7,8 +7,11 @@ let fishes_count = 5;
 function setup() {
     createCanvas(1000, 1000);
 
+    colorMode(HSB);
+
     for (let fish_index = 0; fish_index < fishes_count; fish_index++) {
         fish = new Fish();
+        fish.color = color(random() * 360, 44, 77);
         fish.orbit_enabled = true;
         fish.orbit_angle = fish_index / fishes_count * TAU;
         fish.orbit_center.x = 500;
@@ -25,6 +28,7 @@ function draw() {
 
     for (let fish_index = 0; fish_index < fishes_count; fish_index++) {
         let fish = fishes[fish_index];
+        fish.set_color_hue(fish.color_hue() + 0.5);
         fish.orbit_angle = fish.orbit_angle + 0.005;
         fish.rotation_angle = fish.rotation_angle + 0.02;
         fish.draw();
@@ -92,6 +96,20 @@ class Fish {
 
         pop();
     }
+
+    // Color
+
+    set_color_hue(color_hue) {
+        colorMode(HSB);
+        this.color = color(color_hue, saturation(this.color), brightness(this.color));
+    }
+
+    color_hue() {
+        let color_hue = hue(this.color);
+        return color_hue;
+    }
+
+    // Orbit
 
     update_orbit_position() {
         this.center.x = this.orbit_center.x + (cos(this.orbit_angle) * this.orbit_width / 2);
