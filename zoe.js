@@ -1,14 +1,23 @@
 let cat;
-let fishes;
+let fish;
 let spiral;
 
 function setup() {
-    cat = new Cat();
-    spiral = new Spiral();
+    createCanvas(1000, 1000);
+    
+    fish = new Fish();
+    fish.orbit_enabled = true;
+    fish.orbit_center.x = 500;
+    fish.orbit_center.y = 200;
+    fish.orbit_height = 300;
+    fish.orbit_width = 500;
 }
 
 function draw() {
-    fish = new Fish();
+    background(255);
+
+    fish.orbit_angle = fish.orbit_angle + 0.005;
+    fish.rotation_angle = fish.rotation_angle + 0.02;
     fish.draw();
 }
 
@@ -22,12 +31,27 @@ class Fish {
     constructor() {
         this.center = createVector(0, 0);
         this.color = color(0, 0, 0);
-        this.rotation = 0;
+        this.rotation_angle = 0;
 
-        this.debug_should_draw_center = false;
+        this.orbit_enabled = false;
+        this.orbit_angle = 0;
+        this.orbit_center = createVector(0, 0);
+        this.orbit_height = 0;
+        this.orbit_width = 0;
+
+        this.debug_drawing_enabled = false;
+        this.debug_color = color(255, 0, 0);
     }
 
     draw() {
+        if (this.orbit_enabled) {
+            this.update_orbit_position();
+
+            if (this.debug_drawing_enabled) {
+                this.draw_debug_orbit();
+            }
+        }
+
         push();
 
         fill(this.color);
@@ -47,18 +71,45 @@ class Fish {
         let tail_front_y = 0;
 
         translate(this.center.x, this.center.y);
-        rotate(-this.rotation);
+        rotate(-this.rotation_angle);
 
         ellipse(0, 0, body_width, body_height);
         triangle(tail_front_x, tail_front_y, tail_back_x, tail_back_top, tail_back_x, tail_back_bottom);
 
-        if (this.debug_should_draw_center) {
-            let center_color = color(255, 0, 0);
-            fill(center_color);
-            stroke(center_color);
-
-            circle(0, 0, 10);
+        if (this.debug_drawing_enabled) {
+            this.draw_debug_center();
         }
+
+        pop();
+    }
+
+    update_orbit_position() {
+        this.center.x = this.orbit_center.x + (cos(this.orbit_angle) * this.orbit_width / 2);
+        this.center.y = this.orbit_center.y - (sin(this.orbit_angle) * this.orbit_height / 2);
+    }
+
+    // Debug
+
+    draw_debug_center() {
+        push();
+
+        fill(this.debug_color);
+        stroke(this.debug_color);
+
+        circle(0, 0, 10);
+
+        pop();
+    }
+
+    draw_debug_orbit() {
+        push();
+
+        stroke(this.debug_color);
+        
+        ellipse(this.orbit_center.x, this.orbit_center.y, this.orbit_width, this.orbit_height);
+
+        fill(this.debug_color);
+        circle(this.orbit_center.x, this.orbit_center.y, 10);
 
         pop();
     }
