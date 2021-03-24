@@ -13,6 +13,15 @@ function draw() {
     draw_fishes();
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+    canvas_updated();
+}
+
+function canvas_updated() {
+    update_fishes_layout();
+}
+
 // Fish
 
 function create_fishes() {
@@ -46,13 +55,4 @@ function update_fishes_layout() {
         fish.orbit_width = width * 0.5;
         fish.orbit_height = height * 0.6;
     }
-}
-
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-    canvas_updated();
-}
-
-function canvas_updated() {
-    update_fishes_layout();
 }
