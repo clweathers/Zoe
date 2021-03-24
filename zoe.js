@@ -1,15 +1,21 @@
+let cat;
+
 let fishes = [];
 let fishes_count = 5;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
+
+    create_cat();
     create_fishes();
+
     canvas_updated();
 }
 
 function draw() {
     background(255);
 
+    draw_cat();
     draw_fishes();
 }
 
@@ -19,6 +25,7 @@ function windowResized() {
 }
 
 function canvas_updated() {
+    update_cat_layout();
     update_fishes_layout();
 }
 
@@ -55,4 +62,19 @@ function update_fishes_layout() {
         fish.orbit_width = width * 0.5;
         fish.orbit_height = height * 0.6;
     }
+}
+
+// Cat
+
+function create_cat() {
+    cat = new Cat();
+}
+
+function draw_cat() {
+    cat.draw();
+}
+
+function update_cat_layout() {
+    cat.center.x = width / 2;
+    cat.center.y = height / 2;
 }

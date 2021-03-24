@@ -90,7 +90,7 @@ class Fish {
         push();
 
         stroke(this.debug_color);
-        
+
         ellipse(this.orbit_center.x, this.orbit_center.y, this.orbit_width, this.orbit_height);
 
         fill(this.debug_color);
