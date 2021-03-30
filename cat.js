@@ -6,21 +6,19 @@ class Cat {
         let right_ear_tip = new CatPoint(-183, -172);
         let left_cheek = new CatPoint(-221, 90);
         let right_cheek = new CatPoint(-69, -42);
-        let forehead = new CatPoint(-215, -46);
         let tail = new CatPoint(335, 28);
         let haunch = new CatPoint(234, 172);
+        let forehead = new CatPoint(-215, -46);
 
         this.cat_line_segments = [];
-        this.cat_line_segments[0] = new CatLineSegment(right_ear_tip, forehead);
-        this.cat_line_segments[1] = new CatLineSegment(right_ear_tip, right_cheek);
-        this.cat_line_segments[2] = new CatLineSegment(left_ear_tip, left_cheek);
-        this.cat_line_segments[3] = new CatLineSegment(left_ear_tip, forehead);
-        this.cat_line_segments[4] = new CatLineSegment(forehead, left_cheek);
-        this.cat_line_segments[5] = new CatLineSegment(forehead, right_cheek);
-        this.cat_line_segments[6] = new CatLineSegment(right_cheek, left_cheek);
-        this.cat_line_segments[7] = new CatLineSegment(right_cheek, tail);
-        this.cat_line_segments[8] = new CatLineSegment(tail, haunch);
-        this.cat_line_segments[9] = new CatLineSegment(left_cheek, haunch);
+        this.cat_line_segments.push(new CatLineSegment(right_ear_tip, left_cheek));
+        this.cat_line_segments.push(new CatLineSegment(right_ear_tip, right_cheek));
+        this.cat_line_segments.push(new CatLineSegment(left_ear_tip, right_cheek));
+        this.cat_line_segments.push(new CatLineSegment(left_ear_tip, left_cheek));
+        this.cat_line_segments.push(new CatLineSegment(right_cheek, left_cheek));
+        this.cat_line_segments.push(new CatLineSegment(right_cheek, tail));
+        this.cat_line_segments.push(new CatLineSegment(tail, haunch));
+        this.cat_line_segments.push(new CatLineSegment(left_cheek, haunch));
     }
 
     draw() {
@@ -59,7 +57,7 @@ class CatPoint {
         this.center = createVector(x, y);
         this.drift_angle = random(TAU);
         this.drift_distance_min = 1;
-        this.drift_distance_max = 4;
+        this.drift_distance_max = 5;
         this.drift_distance_noise_offset = random(10);
     }
 
