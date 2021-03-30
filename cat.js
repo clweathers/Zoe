@@ -2,13 +2,13 @@ class Cat {
     constructor() {
         this.center = createVector(0, 0);
 
-        let left_ear_tip = new CatPoint(-335, -72);
-        let right_ear_tip = new CatPoint(-183, -172);
-        let left_cheek = new CatPoint(-221, 90);
-        let right_cheek = new CatPoint(-69, -42);
-        let tail = new CatPoint(335, 28);
-        let haunch = new CatPoint(234, 172);
-        let forehead = new CatPoint(-215, -46);
+        let left_ear_tip = new CatPoint(-193, -41);
+        let right_ear_tip = new CatPoint(-105, -99);
+        let left_cheek = new CatPoint(-127, 51);
+        let right_cheek = new CatPoint(-35, -21);
+        let tail = new CatPoint(193, 19);
+        let haunch = new CatPoint(131, 99);
+        let forehead = new CatPoint(-121, -27);
 
         this.cat_line_segments = [];
         this.cat_line_segments.push(new CatLineSegment(right_ear_tip, left_cheek));
