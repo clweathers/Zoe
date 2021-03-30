@@ -25,7 +25,7 @@ class Cat {
         push();
 
         stroke(23, 66, 60);
-        strokeWeight(8);
+        strokeWeight(14);
 
         translate(this.center.x, this.center.y);
         
