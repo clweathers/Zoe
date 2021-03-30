@@ -1,25 +1,33 @@
 class Cat {
     constructor() {
         this.center = createVector(0, 0);
+
+        let left_ear_tip = new CatPoint(-335, -72);
+        let right_ear_tip = new CatPoint(-183, -172);
+        let left_cheek = new CatPoint(-221, 90);
+        let right_cheek = new CatPoint(-69, -42);
+        let forehead = new CatPoint(-215, -46);
+        let tail = new CatPoint(335, 28);
+        let haunch = new CatPoint(234, 172);
+
         this.cat_line_segments = [];
-        
-        //// Test stuff.
-        let cat_point_1 = new CatPoint(-100, -100);
-        let cat_point_2 = new CatPoint(200, 200);
-        let cat_point_3 = new CatPoint(-100, 300);
-
-        let cat_line_segment_1 = new CatLineSegment(cat_point_1, cat_point_2);
-        let cat_line_segment_2 = new CatLineSegment(cat_point_1, cat_point_3);
-        let cat_line_segment_3 = new CatLineSegment(cat_point_2, cat_point_3);
-
-        this.cat_line_segments.push(cat_line_segment_1);
-        this.cat_line_segments.push(cat_line_segment_2);
-        this.cat_line_segments.push(cat_line_segment_3);
-        //// End of test stuff.
+        this.cat_line_segments[0] = new CatLineSegment(right_ear_tip, forehead);
+        this.cat_line_segments[1] = new CatLineSegment(right_ear_tip, right_cheek);
+        this.cat_line_segments[2] = new CatLineSegment(left_ear_tip, left_cheek);
+        this.cat_line_segments[3] = new CatLineSegment(left_ear_tip, forehead);
+        this.cat_line_segments[4] = new CatLineSegment(forehead, left_cheek);
+        this.cat_line_segments[5] = new CatLineSegment(forehead, right_cheek);
+        this.cat_line_segments[6] = new CatLineSegment(right_cheek, left_cheek);
+        this.cat_line_segments[7] = new CatLineSegment(right_cheek, tail);
+        this.cat_line_segments[8] = new CatLineSegment(tail, haunch);
+        this.cat_line_segments[9] = new CatLineSegment(left_cheek, haunch);
     }
 
     draw() {
         push();
+
+        stroke(23, 66, 60);
+        strokeWeight(8);
 
         translate(this.center.x, this.center.y);
         
@@ -30,17 +38,35 @@ class Cat {
 
         pop();
     }
+
+    update() {
+        let drift_angle_change = 0.005;
+        let drift_distance_noise_offset_change = 0.001;
+
+        for (let cat_line_segment_index = 0; cat_line_segment_index < this.cat_line_segments.length; cat_line_segment_index++) {
+            let cat_line_segment = this.cat_line_segments[cat_line_segment_index];
+            cat_line_segment.first_cat_point.drift_angle += drift_angle_change;
+            cat_line_segment.first_cat_point.drift_distance_noise_offset += drift_distance_noise_offset_change;
+
+            cat_line_segment.second_cat_point.drift_angle += drift_angle_change;
+            cat_line_segment.second_cat_point.drift_distance_noise_offset += drift_distance_noise_offset_change;
+        }
+    }
 }
 
 class CatPoint {
     constructor(x, y) {
         this.center = createVector(x, y);
-        this.drift_distance = 0;
-        this.drift_angle = 0;
+        this.drift_angle = random(TAU);
+        this.drift_distance_min = 1;
+        this.drift_distance_max = 4;
+        this.drift_distance_noise_offset = random(10);
     }
 
     drifted_center() {
-        let drifted_center = p5.Vector.fromAngle(this.drift_angle, this.drift_distance);
+        let drift_noise = noise(this.drift_distance_noise_offset);
+        let drift_distance = map(drift_noise, 0.0, 1.0, this.drift_distance_min, this.drift_distance_max);
+        let drifted_center = p5.Vector.fromAngle(this.drift_angle, drift_distance);
         drifted_center.add(this.center);
         return drifted_center;
     }
