@@ -3,11 +3,14 @@ let cat;
 let fishes = [];
 let fishes_count = 5;
 
+let spiral;
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
 
     create_cat();
     create_fishes();
+    create_spiral();
 
     canvas_updated();
 }
@@ -20,6 +23,9 @@ function draw() {
 
     update_fishes();
     draw_fishes();
+
+    update_spiral();
+    draw_spiral();
 }
 
 function windowResized() {
@@ -28,8 +34,9 @@ function windowResized() {
 }
 
 function canvas_updated() {
-    update_cat_layout();
-    update_fishes_layout();
+    update_cat_canvas_layout();
+    update_fishes_canvas_layout();
+    update_spiral_canvas_layout();
 }
 
 // Fish
@@ -63,7 +70,7 @@ function update_fishes() {
     }
 }
 
-function update_fishes_layout() {
+function update_fishes_canvas_layout() {
     for (let fish_index = 0; fish_index < fishes_count; fish_index++) {
         fish = fishes[fish_index];
         fish.orbit_center.x = width / 2;
@@ -87,7 +94,26 @@ function update_cat() {
     cat.update();
 }
 
-function update_cat_layout() {
+function update_cat_canvas_layout() {
     cat.center.x = width / 2;
     cat.center.y = height / 2;
+}
+
+// Spiral
+
+function create_spiral() {
+    spiral = new Spiral();
+}
+
+function draw_spiral() {
+    spiral.draw();
+}
+
+function update_spiral() {
+    spiral.rotation_angle = spiral.rotation_angle + 0.002;
+}
+
+function update_spiral_canvas_layout() {
+    spiral.center.x = width * 0.25;
+    spiral.center.y = height * 0.75;
 }
